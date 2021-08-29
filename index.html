@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>
+            To-Do-List
+        </title>
+        <style>
+            * {
+                margin: 0;
+                text-align: center;
+            }
+            div {
+                height: 9%;
+                padding: 10px;
+                width: 90%;
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            div > * {
+                width: 90%;
+                height: 100%;
+            }
+            .check, button {
+                width: 10%;
+            }
+        </style>
+        <script>
+            function task() {
+                if (document.getElementById('task').value.trim() != "") {
+                    let newTask = document.createElement('div');
+                    document.body.appendChild(newTask);
+                    let check = document.createElement('input')
+                    check.setAttribute('class', 'check');
+                    check.type = 'checkbox';
+                    newTask.appendChild(check);
+                    let text = document.createElement('input');
+                    text.value = document.getElementById('task').value.trim();
+                    text.disabled = "disabled"
+                    newTask.appendChild(text);
+                    document.getElementById('task').value = "";
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <button onclick="task()">
+                ADD
+            </button>
+            <input id="task" type="text">
+        </div>
+    </body>
+</html>
