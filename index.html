@@ -8,26 +8,55 @@
                 margin: 0;
                 text-align: center;
             }
-            div {
-                height: 9%;
-                padding: 10px;
-                width: 90%;
+            body {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                background-color: #4ca5ce;
+            }
+            #container > div {
+                height: 7%;
+                margin: 10px;
+                width: 70%;
                 display: flex;
                 flex-wrap: nowrap;
             }
-            div > * {
-                width: 90%;
-                height: 100%;
-            }
             .check, button {
+                height: 100%;
                 width: 10%;
+            }
+            input {
+                height: 100%;
+                width: 90%;
+                border: 0;
+            }
+            #container {
+                height: 90%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #new {
+                height: 6%;
+                margin: 10px;
+                width: 60%;
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            #new, #new > * {
+                border-radius: 40px;
+                background-color: #ffffff;
+            }
+            button {
+                border-color: #cccccc;
             }
         </style>
         <script>
+            "use strict";
             function task() {
                 if (document.getElementById('task').value.trim() != "") {
                     let newTask = document.createElement('div');
-                    document.body.appendChild(newTask);
                     let check = document.createElement('input')
                     check.setAttribute('class', 'check');
                     check.type = 'checkbox';
@@ -36,17 +65,38 @@
                     text.value = document.getElementById('task').value.trim();
                     text.disabled = "disabled"
                     newTask.appendChild(text);
+                    document.getElementById('container').appendChild(newTask);
                     document.getElementById('task').value = "";
                 }
             }
+            function strike() {
+                let checkbox = document.getElementsByClassName('check');
+                let checkboxes = [].slice.call(checkbox);
+                let checked = checkboxes.filter(function (value) {
+                    return value.checked;
+                });
+                let unchecked = checkboxes.filter(function (value) {
+                    return !value.checked;
+                });
+                return [checked, unchecked];
+            }
+            window.setInterval(()=>{
+                strike()[1].forEach(function (value) {
+                    value.nextElementSibling.setAttribute('style', "text-decoration: none;");
+                });
+                strike()[0].forEach(function (value) {
+                    value.nextElementSibling.setAttribute('style', "text-decoration: line-through;");
+                });
+            }, 100);
         </script>
     </head>
     <body>
-        <div>
+        <div id="new">
             <button onclick="task()">
                 ADD
             </button>
             <input id="task" type="text">
         </div>
+        <div id="container"></div>
     </body>
 </html>
